@@ -119,8 +119,8 @@ public class RegisterActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     registerViewModel.register(usernameEditText.getText().toString(),
-                            nicknameEditText.getText().toString(),
                             passwordEditText.getText().toString(),
+                            nicknameEditText.getText().toString(),
                             captchaEditText.getText().toString());
                 }
                 return false;
@@ -132,15 +132,15 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 registerViewModel.register(usernameEditText.getText().toString(),
-                        nicknameEditText.getText().toString(),
                         passwordEditText.getText().toString(),
+                        nicknameEditText.getText().toString(),
                         captchaEditText.getText().toString());
             }
         });
     }
 
-    private void updateUiWithUser(boolean isReg) {
-        String welcome = isReg ? "注册成功" : "验证码发送成功";
+    private void updateUiWithUser(boolean isCap) {
+        String welcome = !isCap ? "注册成功" : "验证码发送成功";
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
