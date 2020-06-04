@@ -56,10 +56,10 @@ public class LoginViewModel extends ViewModel {
         if (username == null) {
             return false;
         }
-        if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
+        if (!username.matches("[0-9]*")) {
+            return false;
         } else {
-            return !username.trim().isEmpty();
+            return username.length() == 11;
         }
     }
 
