@@ -46,6 +46,7 @@ public class LoginDataSource {
                 return new Result.Error(new Exception(err));
             } else {
                 token = resj.getString("token");
+                Config.token = token;
             }
             String url2 = Config.BaseUrl + "/client/UserInfo";
             String userName = getName(url2, cellphone);
@@ -104,7 +105,7 @@ public class LoginDataSource {
         return resbody[0];
     }
 
-    private String getName(String url, String cellphone) throws IOException, InterruptedException {
+    private String getName(String url, String cellphone) throws IOException, InterruptedException, JSONException {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder
@@ -140,7 +141,12 @@ public class LoginDataSource {
             }
         });
         countDownLatch.await();
-        return resbody[0];
+        JSONObject resj = new JSONObject(resbody[0]);
+        if (resj.getInt("err_no") != 0) {
+            return resj.getString("err_tips");
+        } else {
+            return resj.getString("nickname");
+        }
     }
 
 //    private String readToken() {
