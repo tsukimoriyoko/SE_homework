@@ -50,6 +50,8 @@ public class LoginDataSource {
             }
             String url2 = Config.BaseUrl + "/client/UserInfo";
             String userName = getName(url2, cellphone);
+            Config.cellphone = cellphone;
+            Config.usename = userName;
             LoggedInUser user =
                     new LoggedInUser(java.util.UUID.randomUUID().toString(), userName);
 //            LoggedInUser fakeUser =
@@ -95,7 +97,7 @@ public class LoginDataSource {
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
                     String res = responseBody.string();
-                    Log.d("resresres", res);
+                    Log.d("res", res);
                     resbody[0] = res;
                     countDownLatch.countDown();
                 }

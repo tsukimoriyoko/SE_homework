@@ -35,10 +35,6 @@ public class Carport {
             return null;
         }
     }
-
-    private static final MediaType JSON
-            = MediaType.get("application/json; charset=utf-8");
-
     private String get(String url, int park_id) throws IOException, InterruptedException, JSONException {
         OkHttpClient client = new OkHttpClient();
 
@@ -77,4 +73,7 @@ public class Carport {
         countDownLatch.await();
         return resbody[0];
     }
+
+    private static final MediaType JSON
+            = MediaType.get("application/json; charset=utf-8");
 }
