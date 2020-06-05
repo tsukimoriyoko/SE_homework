@@ -20,7 +20,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class Carport {
-    public ArrayList<JSONObject> getCarport(int park_id) {
+    public static ArrayList<JSONObject> getCarport(int park_id) {
         try {
             String res = get(Config.BaseUrl + "/client/ParkInfo", park_id);
             JSONObject resJson = new JSONObject(res);
@@ -35,7 +35,9 @@ public class Carport {
             return null;
         }
     }
-    private String get(String url, int park_id) throws IOException, InterruptedException, JSONException {
+
+    private static String get(String url, int park_id)
+            throws IOException, InterruptedException, JSONException {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder

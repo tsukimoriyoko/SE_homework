@@ -1,31 +1,25 @@
 package com.example.se.ui.home;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.se.R;
-import com.example.se.data.CustomAdapter;
+import com.example.se.data.Carport;
+import com.example.se.data.adapter.ParkListAdapter;
 import com.example.se.data.LocationUtils;
 import com.example.se.data.Park;
 
@@ -62,30 +56,21 @@ public class HomeFragment extends Fragment {
 
         Park park = new Park();
         parkMetaInfo = park.getParks();
-        if (parkMetaInfo != null) {
-            for (int i = 0; i < parkMetaInfo.size(); i++) {
-                JSONObject json = parkMetaInfo.get(i);
-                try {
-                    String info = json.getString("name") + "停车场，"
-                            + "费用：" + (json.getInt("charge") == 0 ? "免费" : "收费");
-                    parkInfo.add(info);
-                    String info2 = "余位：" + json.getInt("empty_ports") + "/" + json.getInt("total_ports")
-                            + "，距离当前位置：";
-                    parkInfo_tmp.add(info2);
-                    Pair<Double, Double> location = new Pair<>(json.getDouble("longitude"),
-                            json.getDouble("latitude"));
-                    parkLocation.add(location);
-                    parkDistance.add(-1.0);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        parserMetaInfo();
+
         parkListView = root.findViewById(R.id.parkListView);
-        CustomAdapter customAdapter = new CustomAdapter();
+        parkListAdapter = new ParkListAdapter(this.getContext(), parkInfo, parkInfo_2);
+        parkListView.setAdapter(parkListAdapter);
+
+        parkListView.setOnItemClickListener((parent, view, position, id) -> {
+            ArrayList<JSONObject> carportJson = Carport.getCarport(parkId.get((int) id));
+        });
+
+        Runnable runGPS = this::getGPSLocation;
+        this.getActivity().runOnUiThread(runGPS);
+
         return root;
     }
-
 
     private ArrayList<JSONObject> parkMetaInfo = new ArrayList<>();
     private ArrayList<String> parkInfo = new ArrayList<>();
@@ -93,9 +78,34 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> parkInfo_2 = new ArrayList<>();
     private ArrayList<Pair<Double, Double>> parkLocation = new ArrayList<>();
     private ArrayList<Double> parkDistance = new ArrayList<>();
+    private ArrayList<Integer> parkId = new ArrayList<>();
 
-    public ListView parkListView;
+    private ListView parkListView;
+    private ParkListAdapter parkListAdapter;
 
+    private void parserMetaInfo() {
+        if (parkMetaInfo != null) {
+            for (int i = 0; i < parkMetaInfo.size(); i++) {
+                JSONObject json = parkMetaInfo.get(i);
+                try {
+                    String info = json.getString("name") + "停车场，"
+                            + "费用：" + (json.getInt("charge") == 0 ? "免费" : "收费");
+                    parkInfo.add(info);
+                    String info2 = "余位：" + json.getInt("empty_ports") + "/"
+                            + json.getInt("total_ports") + "，距离当前位置：";
+                    parkInfo_tmp.add(info2);
+                    Pair<Double, Double> location = new Pair<>(json.getDouble("longitude"),
+                            json.getDouble("latitude"));
+                    parkLocation.add(location);
+                    parkDistance.add(-1.0);
+                    parkInfo_2.add(info2 + "-1");
+                    parkId.add(Integer.getInteger(json.getString("id")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public void getGPSLocation() {
         Location gps = LocationUtils.getGPSLocation(this.getContext());
@@ -108,6 +118,8 @@ public class HomeFragment extends Fragment {
                                 double lng2 = parkLocation.get(i).first,
                                         lat2 = parkLocation.get(i).second;
                                 parkDistance.set(i, LocationUtils.getDistance(lng1, lng2, lat1, lat2));
+                                parkInfo_2.set(i, parkInfo_tmp.get(i) + parkDistance.get(i) + "km");
+                                parkListAdapter.updateDistance(parkInfo_2);
                             }
                             Toast.makeText(HomeFragment.this.getActivity(),
                                     "gps onSuccessLocation location: lat==" + location.getLatitude()

@@ -20,4 +20,6 @@
     <string name="action_register">注册</string>
     <string name="nickname">昵称</string>
     <string name="getLocationButton">getLocation</string>
+    <string name="title_activity_register">注册</string>
+    <string name="ensure_password">确认密码</string>
 </resources>

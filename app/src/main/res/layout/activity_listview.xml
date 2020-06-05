@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -20,35 +20,35 @@
         app:srcCompat="@drawable/park" />
 
     <TextView
-        android:id="@+id/park_info2"
-        android:layout_width="250dp"
+        android:id="@+id/park_info1"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="viewStart"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/park_info2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.832"
+        app:layout_constraintHorizontal_bias="0.735"
         app:layout_constraintStart_toStartOf="@id/imageView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/park_info1"
-        android:layout_width="250dp"
+        android:id="@+id/park_info2"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="28sp"
+        android:textAlignment="textStart"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.832"
+        app:layout_constraintHorizontal_bias="0.735"
         app:layout_constraintStart_toStartOf="@id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintTop_toTopOf="@id/park_info1"
+        app:layout_constraintVertical_bias="0.7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
