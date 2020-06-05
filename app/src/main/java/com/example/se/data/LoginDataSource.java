@@ -68,7 +68,7 @@ public class LoginDataSource {
         // TODO: revoke authentication
     }
 
-    public String token;
+    private String token;
 
     private static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");

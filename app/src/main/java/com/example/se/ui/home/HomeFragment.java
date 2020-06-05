@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,10 @@ public class HomeFragment extends Fragment {
                     String info2 = "余位：" + json.getInt("empty_ports") + "/" + json.getInt("total_ports")
                             + "，距离当前位置：";
                     parkInfo_tmp.add(info2);
+                    Pair<Double, Double> location = new Pair<>(json.getDouble("longitude"),
+                            json.getDouble("latitude"));
+                    parkLocation.add(location);
+                    parkDistance.add(-1.0);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -81,12 +86,16 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+
     private ArrayList<JSONObject> parkMetaInfo = new ArrayList<>();
     private ArrayList<String> parkInfo = new ArrayList<>();
     private ArrayList<String> parkInfo_tmp = new ArrayList<>();
-    public ArrayList<String> parkInfo_2 = new ArrayList<>();
+    private ArrayList<String> parkInfo_2 = new ArrayList<>();
+    private ArrayList<Pair<Double, Double>> parkLocation = new ArrayList<>();
+    private ArrayList<Double> parkDistance = new ArrayList<>();
 
     public ListView parkListView;
+
 
     public void getGPSLocation() {
         Location gps = LocationUtils.getGPSLocation(this.getContext());
@@ -94,6 +103,12 @@ public class HomeFragment extends Fragment {
             LocationUtils.addLocationListener(this.getContext(), LocationManager.GPS_PROVIDER,
                     location -> {
                         if (location != null) {
+                            double lng1 = location.getLongitude(), lat1 = location.getLatitude();
+                            for (int i = 0; i < parkLocation.size(); i++) {
+                                double lng2 = parkLocation.get(i).first,
+                                        lat2 = parkLocation.get(i).second;
+                                parkDistance.set(i, LocationUtils.getDistance(lng1, lng2, lat1, lat2));
+                            }
                             Toast.makeText(HomeFragment.this.getActivity(),
                                     "gps onSuccessLocation location: lat==" + location.getLatitude()
                                             + " lng==" + location.getLongitude(),

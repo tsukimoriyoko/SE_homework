@@ -32,7 +32,6 @@ public class Parking {
             return -1;
         }
     }
-
     public int pickup(int carport_id) {
         String url = Config.BaseUrl + "/client/PickUp";
         String json = "{\"car_port_id\":" + carport_id + "}";
@@ -103,6 +102,7 @@ public class Parking {
                 try (ResponseBody responseBody = response.body()) {
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
+                    assert responseBody != null;
                     String res = responseBody.string();
                     Log.d("res", res);
                     resBody[0] = res;

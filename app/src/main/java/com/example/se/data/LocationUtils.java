@@ -151,4 +151,13 @@ public class LocationUtils {
     public interface ILocationListener {
         void onSuccessLocation(Location location);
     }
+
+    public static double getDistance(double lng1, double lng2, double lat1, double lat2) {
+        double radius = 6378.137;
+        double tmp1 = Math.pow(Math.sin(Math.toRadians((lat1 - lat2) / 2)), 2),
+                tmp2 = Math.pow(Math.sin(Math.toRadians((lng1 - lng2) / 2)), 2);
+        double tmp3 = Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+        double tmp4 = Math.asin(Math.sqrt(tmp1 * tmp2 * tmp3));
+        return 2 * tmp4 * radius;
+    }
 }
