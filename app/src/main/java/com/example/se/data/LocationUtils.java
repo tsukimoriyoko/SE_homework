@@ -47,12 +47,13 @@ public class LocationUtils {
     public static Location getGPSLocation(@NonNull Context context) {
         Location location = null;
         LocationManager manager = getLocationManager(context);
-        //高版本的权限检查
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
-        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {//是否支持GPS定位
-            //获取最后的GPS定位信息，如果是第一次打开，一般会拿不到定位信息，一般可以请求监听，在有效的时间范围可以获取定位信息
+        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            //获取最后的GPS定位信息，如果是第一次打开，一般会拿不到定位信息，一般可以请求监听，
+            // 在有效的时间范围可以获取定位信息
             location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
         return location;
@@ -65,10 +66,11 @@ public class LocationUtils {
         Location location = null;
         LocationManager manager = getLocationManager(context);
         //高版本的权限检查
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
-        if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {//是否支持Network定位
+        if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             //获取最后的network定位信息
             location = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
@@ -89,9 +91,10 @@ public class LocationUtils {
             //如果找不到最适合的定位，使用network定位
             location = getNetWorkLocation(context);
         } else {
-            //高版本的权限检查
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
                 return null;
             }
             //获取最适合的定位方式的最后的定位权限
@@ -103,15 +106,16 @@ public class LocationUtils {
     /**
      * 定位监听
      */
-    public static void addLocationListener(Context context, String provider, ILocationListener locationListener) {
-
+    public static void addLocationListener(Context context, String provider,
+                                           ILocationListener locationListener) {
         addLocationListener(context, provider, REFRESH_TIME, METER_POSITION, locationListener);
     }
 
     /**
      * 定位监听
      */
-    public static void addLocationListener(Context context, String provider, long time, float meter, ILocationListener locationListener) {
+    public static void addLocationListener(Context context, String provider, long time, float meter,
+                                           ILocationListener locationListener) {
         if (locationListener != null) {
             mLocationListener = locationListener;
         }
@@ -119,8 +123,10 @@ public class LocationUtils {
             listener = new MyLocationListener();
         }
         LocationManager manager = getLocationManager(context);
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         manager.requestLocationUpdates(provider, time, meter, listener);
@@ -132,11 +138,12 @@ public class LocationUtils {
     public static void unRegisterListener(Context context) {
         if (listener != null) {
             LocationManager manager = getLocationManager(context);
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            //移除定位监听
             manager.removeUpdates(listener);
         }
     }

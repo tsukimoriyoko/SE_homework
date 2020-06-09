@@ -22,6 +22,10 @@ public class ParkListAdapter extends BaseAdapter {
                            ArrayList<String> info2List) {
         this.context = applicationContext;
         this.info1List = info1List;
+//        this.info2List = new ArrayList<>();
+//        for (String item : info2List) {
+//            this.info2List.add(item);
+//        }
         this.info2List = info2List;
         inflter = (LayoutInflater.from(applicationContext));
     }
@@ -41,9 +45,9 @@ public class ParkListAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void updateDistance(ArrayList<String> newDistanceInfo) {
-        info2List.clear();
-        info2List.addAll(newDistanceInfo);
+    public void updateDistance() {
+//        info2List.clear();
+//        info2List.addAll(newDistanceInfo);
         this.notifyDataSetChanged();
     }
 
