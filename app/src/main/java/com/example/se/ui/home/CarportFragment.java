@@ -21,6 +21,8 @@ import com.example.se.data.BillsDataSource;
 import com.example.se.data.Config;
 import com.example.se.data.adapter.CarportListAdapter;
 
+import java.util.Objects;
+
 public class CarportFragment extends Fragment {
     private CarportViewModel carportViewModel;
 
@@ -44,7 +46,7 @@ public class CarportFragment extends Fragment {
                         "该车位已被占用", Toast.LENGTH_SHORT).show();
                 return;
             }
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
             builder.setMessage("是否确定停车？")
                     .setIcon(R.drawable.pay)
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {

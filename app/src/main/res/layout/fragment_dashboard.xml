@@ -17,19 +17,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_pickup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pickup"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_dashboard"
-        tools:visibility="invisible" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.317" />
 
     <Button
         android:id="@+id/button_pay"
@@ -38,7 +29,22 @@
         android:text="@string/pay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/text_dashboard"
+        app:layout_constraintVertical_bias="0.327"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/button_pickup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pickup"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_dashboard"
+        app:layout_constraintVertical_bias="0.327"
         tools:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
