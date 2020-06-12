@@ -41,9 +41,9 @@ public class CarportListAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void updateDistance(ArrayList<String> newDistanceInfo) {
-        info2List.clear();
-        info2List.addAll(newDistanceInfo);
+    public void updateDistance() {
+//        info2List.clear();
+//        info2List.addAll(newDistanceInfo);
         this.notifyDataSetChanged();
     }
 

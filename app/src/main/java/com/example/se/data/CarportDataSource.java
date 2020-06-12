@@ -19,7 +19,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Carport {
+public class CarportDataSource {
     public static ArrayList<JSONObject> getCarport(int park_id) {
         try {
             String res = get(Config.BaseUrl + "/client/ParkInfo", park_id);

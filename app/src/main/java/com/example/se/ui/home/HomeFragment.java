@@ -4,7 +4,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +18,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.se.R;
-import com.example.se.data.Carport;
 import com.example.se.data.LocationUtils;
-import com.example.se.data.Park;
+import com.example.se.data.Config;
 import com.example.se.data.adapter.ParkListAdapter;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 public class HomeFragment extends Fragment {
@@ -57,13 +50,28 @@ public class HomeFragment extends Fragment {
 //            }
 //        });
 
+        carportFragment = root.findViewById(R.id.fragment_carport);
+        carportFragment.setVisibility(View.INVISIBLE);
+
         parkListView = root.findViewById(R.id.parkListView);
         parkListAdapter = new ParkListAdapter(this.getContext(),
-                homeViewModel.getParkInfo(), homeViewModel.getParkInfo_2());
+                homeViewModel.getParkInfo(), homeViewModel.getParkInfo2());
         parkListView.setAdapter(parkListAdapter);
 
         parkListView.setOnItemClickListener((parent, view, position, id) -> {
-            ArrayList<JSONObject> carportJson = Carport.getCarport(homeViewModel.getParkId((int) id));
+            Config.park_id_to_req = homeViewModel.getParkId((int) id);
+            Log.d("park_id", "" + Config.park_id_to_req);
+//            root.setVisibility(View.INVISIBLE);
+            carportFragment.setVisibility(View.VISIBLE);
+            parkListView.setVisibility(View.GONE);
+//            FragmentManager fragmentManager = getChildFragmentManager();
+//            CarportFragment carportFragment = new CarportFragment();
+//            FragmentTransaction transaction = fragmentManager.beginTransaction();
+//            transaction
+//                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+//                    .add(R.id.fragment_carport, carportFragment)
+//                    .show(carportFragment)
+//                    .commit();
         });
 
         Runnable runGPS = this::getGPSLocation;
@@ -72,6 +80,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    View carportFragment;
     private ListView parkListView;
     private ParkListAdapter parkListAdapter;
 
@@ -93,10 +102,12 @@ public class HomeFragment extends Fragment {
                     });
         } else {
             double lng1 = gps.getLongitude(), lat1 = gps.getLatitude();
+            Config.lng = lng1;
+            Config.lat = lat1;
             homeViewModel.updateParkInfo(lng1, lat1);
             parkListAdapter.updateDistance();
-            Toast.makeText(this.getActivity(), "gps location: lat==" + gps.getLatitude()
-                    + " lng==" + gps.getLongitude(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this.getActivity(), "gps location: lat==" + gps.getLatitude()
+//                    + " lng==" + gps.getLongitude(), Toast.LENGTH_SHORT).show();
         }
     }
 

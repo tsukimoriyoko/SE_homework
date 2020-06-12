@@ -8,12 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -51,7 +49,7 @@ public class LoginDataSource {
             String url2 = Config.BaseUrl + "/client/UserInfo";
             String userName = getName(url2, cellphone);
             Config.cellphone = cellphone;
-            Config.usename = userName;
+            Config.username = userName;
             LoggedInUser user =
                     new LoggedInUser(java.util.UUID.randomUUID().toString(), userName);
 //            LoggedInUser fakeUser =

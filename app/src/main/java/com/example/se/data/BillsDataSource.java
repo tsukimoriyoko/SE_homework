@@ -19,7 +19,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Parking {
+public class BillsDataSource {
     public int park(int carport_id) {
         String url = Config.BaseUrl + "/client/Park";
         String json = "{\"car_port_id\":" + carport_id + "}";
@@ -47,7 +47,7 @@ public class Parking {
 
     public int getParkedCarport() {
         try {
-            return Integer.getInteger(getUserInfo("car_port_id"));
+            return Integer.decode(getUserInfo("car_port_id"));
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
@@ -56,7 +56,7 @@ public class Parking {
 
     public int getUnpayedBillId() {
         try {
-            return Integer.getInteger(getUserInfo("bills"));
+            return Integer.decode(getUserInfo("bills"));
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
@@ -167,8 +167,13 @@ public class Parking {
                     return resJson.getString(tag);
                 case "bills":
                     JSONArray bills = resJson.getJSONArray(tag);
-                    JSONObject bill = bills.getJSONObject(0);
-                    return bill.getString("id");
+                    if (bills.length() == 0) {
+                        return "0";
+                    } else {
+                        JSONObject bill = bills.getJSONObject(0);
+                        return bill.getString("id");
+                    }
+
             }
         }
         return "unknown error";

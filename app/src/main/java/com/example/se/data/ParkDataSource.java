@@ -21,7 +21,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Park {
+public class ParkDataSource {
     public ArrayList<JSONObject> getParks() {
         try {
             String res = get(Config.BaseUrl + "/client/MetaInfo");
