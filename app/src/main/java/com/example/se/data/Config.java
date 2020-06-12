@@ -7,4 +7,6 @@ public class Config {
     static String username = "";
     public static int park_id_to_req = 1;
     public static double lng = 0, lat = 0;
+    public static String parkedTime = "";
+//    public static int unPickedCarport = 17;
 }

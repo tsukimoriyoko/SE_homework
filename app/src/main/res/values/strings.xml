@@ -11,7 +11,7 @@
     <string name="login_failed">"登陆失败"</string>
     <string name="title_activity_main">主页</string>
     <string name="title_home">停车</string>
-    <string name="title_dashboard">支付</string>
+    <string name="title_dashboard">订单</string>
     <string name="title_notifications">消息</string>
     <string name="cellphone">手机号</string>
     <string name="password">密码</string>
@@ -22,4 +22,6 @@
     <string name="getLocationButton">getLocation</string>
     <string name="title_activity_register">注册</string>
     <string name="ensure_password">确认密码</string>
+    <string name="pickup">取车</string>
+    <string name="pay">支付</string>
 </resources>
